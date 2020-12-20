@@ -8,8 +8,11 @@ fi
 DEBIAN_FRONTEND=noninteractive
 
 apt-get update
-apt-get install -y cmake ninja nasm cargo
-pushd
+apt-get install -y cmake nasm cargo ninja-build python3-pip
+python -m pip install --upgrade pip
+python -m pip install setuptools
+python -m pip install meson
+
 cd /tmp
 rm -rf /tmp/libavif
 
@@ -18,8 +21,8 @@ cd libavif/ext
 #export MAKEFLAGS=-j$(nproc)
 MAKEFLAGS=-j4
 bash aom.cmd
+bash libjpeg.cmd
 bash libyuv.cmd
-bash svt.cmd
 
 cd ..
 mkdir build
@@ -30,4 +33,4 @@ ninja
 
 cp /tmp/libavif/build/avifenc /usr/bin/
 rm -rf /tmp/cavif
-popd
+

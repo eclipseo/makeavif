@@ -19,7 +19,7 @@ makeavif --recursive /home/username/myphotos
 
 You will need [avifenc](https://github.com/AOMediaCodec/libavif) in path. You can get it by running build_avif.sh as root
 
-### Windows
+## Windows
 
 You can download and use it as single Windows binary, see [Releases](https://github.com/varnav/makeavif/releases/)
 
