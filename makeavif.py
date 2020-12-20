@@ -10,7 +10,7 @@ from typing import Iterable
 
 import click
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 SUPPORTED_FORMATS = ["jpg", "jpeg", "png", "y4m"]
 
 
@@ -37,8 +37,9 @@ def search_files(dirpath: str, recursive: bool) -> Iterable[str]:
 @click.command()
 @click.argument('directory', type=click.Path(exists=True))
 @click.option('-r', '--recursive', is_flag=True, help='Recursive')
-@click.option('-s', '--speed', default='7', help='Speed')
-def main(directory, recursive=False, speed='7'):
+@click.option('-s', '--speed', default='7', help='Speed: 1 is fastest, 8 is best quality')
+@click.option('-c', '--codec', default='aom', help='Codec: aom (default) or svt (experimantal)')
+def main(directory, recursive=False, speed='7', codec='aom'):
     if which('avifenc') is None:
         print('avifenc not found')
         exit(1)
@@ -60,7 +61,7 @@ def main(directory, recursive=False, speed='7'):
     for filepath in search_files(str(directory), recursive=recursive):
         fp = pathlib.PurePath(filepath)
         newpath = fp.parent.joinpath(fp.stem + '.' + 'avif')
-        convert_cmd = f'avifenc -j {jobs} -s {speed} {fp} -o {newpath}'
+        convert_cmd = f'avifenc -j {jobs} -c {codec} -s {speed} {fp} -o {newpath}'
         conversion_return_code = run(convert_cmd, shell=True).returncode
         if conversion_return_code == 0:
             saved = os.path.getsize(fp) - os.path.getsize(newpath)
