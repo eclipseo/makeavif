@@ -38,7 +38,7 @@ def search_files(dirpath: str, recursive: bool) -> Iterable[str]:
 @click.argument('directory', type=click.Path(exists=True))
 @click.option('-r', '--recursive', is_flag=True, help='Recursive')
 @click.option('-s', '--speed', default='7', help='Speed: 1 is fastest, 8 is best quality')
-@click.option('-c', '--codec', default='aom', help='Codec: aom (default) or svt (experimantal)')
+@click.option('-c', '--codec', default='aom', help='Codec: aom (default) or svt (experimental)')
 def main(directory, recursive=False, speed='7', codec='aom'):
     if which('avifenc') is None:
         print('avifenc not found')
